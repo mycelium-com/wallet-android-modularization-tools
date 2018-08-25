@@ -1,2 +1,11 @@
-/build
 *.iml
+.gradle
+/local.properties
+!.idea/copyright/
+!.idea/scopes/
+.idea/
+!.idea/codeStyleSettings.xml
+.DS_Store
+/build
+/captures
+.externalNativeBuild
