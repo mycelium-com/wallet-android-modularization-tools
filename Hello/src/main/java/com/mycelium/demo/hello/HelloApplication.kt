@@ -1,10 +1,12 @@
 package com.mycelium.demo.hello
 
 import android.app.Application
+import android.content.Intent
 import android.util.Log
 import com.mycelium.modularizationtools.CommunicationManager
+import com.mycelium.modularizationtools.ModuleMessageReceiver
 
-class HelloApplication : Application() {
+class HelloApplication : Application(), ModuleMessageReceiver {
     override fun onCreate() {
         super.onCreate()
         CommunicationManager.init(this)
@@ -12,6 +14,16 @@ class HelloApplication : Application() {
             CommunicationManager.getInstance().requestPair("com.mycelium.demo.world")
         } catch (se: SecurityException) {
             Log.w("HelloApplication", se.message)
+        }
+    }
+
+    override fun onMessage(callingPackageName: String, intent: Intent) {
+        when (callingPackageName) {
+            "com.mycelium.demo.world" -> {
+                val msg = intent.getStringExtra("message")
+                Log.d("HelloApplication", "Message received: $msg")
+            }
+            else -> Log.e("HelloApplication", "We don't know what to talk with $callingPackageName")
         }
     }
 }

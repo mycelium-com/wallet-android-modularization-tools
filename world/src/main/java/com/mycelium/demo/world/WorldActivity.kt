@@ -1,10 +1,12 @@
 package com.mycelium.demo.world
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import com.mycelium.modularizationtools.CommunicationManager
 
 import kotlinx.android.synthetic.main.activity_world.*
 
@@ -16,8 +18,11 @@ class WorldActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+            val number = (Math.random() * 10).toInt()
+            val msg = "My secret number is $number."
+            Snackbar.make(view, "Sending '$msg' to Hello.", Snackbar.LENGTH_SHORT)
                     .setAction("Action", null).show()
+            CommunicationManager.getInstance().send("com.mycelium.demo.hello", Intent("someAction").putExtra("message", msg))
         }
     }
 
