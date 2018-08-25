@@ -23,8 +23,16 @@ class MessageReceiver : IntentService("MessageReceiverThread") {
      * *               for details.
      */
     override fun onHandleIntent(intent: Intent?) {
-        if (null == intent || null == intent.action || !intent.hasExtra("key")) {
-            Log.e(LOG_TAG, "onStartCommand failed: Intent was $intent")
+        if (null == intent) {
+            Log.e(LOG_TAG, "Message intent may not be null")
+            return
+        }
+        if (null == intent.action) {
+            Log.e(LOG_TAG, "Message intent must have an action")
+            return
+        }
+        if (!intent.hasExtra("key")) {
+            Log.e(LOG_TAG, "Message intent must not have a 'key' extra defined")
             return
         }
 
