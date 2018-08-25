@@ -1,4 +1,4 @@
-package com.mycelium.world
+package com.mycelium.demo.world
 
 import android.os.Bundle
 import android.support.design.widget.Snackbar
@@ -8,7 +8,7 @@ import android.view.MenuItem
 
 import kotlinx.android.synthetic.main.activity_world.*
 
-class World : AppCompatActivity() {
+class WorldActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

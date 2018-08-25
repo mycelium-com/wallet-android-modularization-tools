@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getTargetContext()
-        assertEquals("com.mycelium.modularizationtools", appContext.packageName)
+        assertEquals("com.mycelium.demo.hello", appContext.packageName)
     }
 }

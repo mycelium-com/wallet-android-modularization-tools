@@ -1,4 +1,4 @@
-package com.mycelium.modularizationtools
+package com.mycelium.demo.hello
 
 import android.os.Bundle
 import android.support.design.widget.Snackbar

@@ -6,7 +6,7 @@ android {
     compileSdkVersion 28
 
     defaultConfig {
-        applicationId "com.mycelium.world"
+        applicationId "com.mycelium.demo.world"
         minSdkVersion 19
         targetSdkVersion 28
         versionCode 1
