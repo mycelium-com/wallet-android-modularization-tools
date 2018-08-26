@@ -20,6 +20,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <provider
+            android:name=".Secretsprovider"
+            android:exported="true"
+            android:authorities="${applicationId}.providers.Secretsprovider" />
     </application>
 
 </manifest>

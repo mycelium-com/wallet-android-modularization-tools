@@ -22,6 +22,7 @@ class WorldActivity : AppCompatActivity() {
             val msg = "My secret number is $number."
             Snackbar.make(view, "Sending '$msg' to Hello.", Snackbar.LENGTH_SHORT)
                     .setAction("Action", null).show()
+            WorldApplication.sentMessages.add(msg)
             CommunicationManager.getInstance().send("com.mycelium.demo.hello", Intent("someAction").putExtra("message", msg))
         }
     }

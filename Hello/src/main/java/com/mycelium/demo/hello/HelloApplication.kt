@@ -22,6 +22,9 @@ class HelloApplication : Application(), ModuleMessageReceiver {
             "com.mycelium.demo.world" -> {
                 val msg = intent.getStringExtra("message")
                 Log.d("HelloApplication", "Message received: $msg")
+                if (msg.contains("5")) {
+                    startActivity(Intent(applicationContext, HelloActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+                }
             }
             else -> Log.e("HelloApplication", "We don't know what to talk with $callingPackageName")
         }

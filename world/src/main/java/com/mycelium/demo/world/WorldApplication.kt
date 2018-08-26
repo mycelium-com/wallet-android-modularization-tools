@@ -14,4 +14,8 @@ class WorldApplication : Application() {
             Log.w("WorldApplication", se.message)
         }
     }
+
+    companion object {
+        val sentMessages = mutableListOf<String>()
+    }
 }

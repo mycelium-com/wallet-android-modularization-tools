@@ -1,24 +1,36 @@
 package com.mycelium.demo.hello
 
+import android.net.Uri
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
-import android.view.Menu
-import android.view.MenuItem
+import android.support.v7.widget.RecyclerView
+import android.view.*
+import android.widget.TextView
+import com.mycelium.modularizationtools.CommunicationManager
 
 import kotlinx.android.synthetic.main.activity_hello.*
 
 class HelloActivity : AppCompatActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_hello)
         setSupportActionBar(toolbar)
 
         fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+            Snackbar.make(view, "Loading secrets", Snackbar.LENGTH_SHORT)
                     .setAction("Action", null).show()
+            CommunicationManager.getInstance().requestPair("com.mycelium.demo.world")
+            contentResolver.query(Uri.parse("content://com.mycelium.demo.world.providers.Secretsprovider"), null, null, null, null).use {
+                val secretsList = mutableListOf<String>()
+                while (it?.moveToNext() == true) {
+                    secretsList.add(it.getString(0))
+                }
+                rvSecrets.adapter = SecretsRecyclerAdapter(secretsList)
+                Snackbar.make(view, "Secrets received: ${secretsList.joinToString(" ")}", Snackbar.LENGTH_LONG).show()
+            }
         }
+        rvSecrets.adapter = SecretsRecyclerAdapter(listOf("no data", "press the button"))
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -34,6 +46,27 @@ class HelloActivity : AppCompatActivity() {
         return when (item.itemId) {
             R.id.action_settings -> true
             else -> super.onOptionsItemSelected(item)
+        }
+    }
+}
+
+class SecretsRecyclerAdapter(val secretsList: List<String>) : RecyclerView.Adapter<SecretsRecyclerAdapter.ViewHolder>() {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val v = LayoutInflater.from(parent.context).inflate(R.layout.list_layout, parent, false)
+        return ViewHolder(v)
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.bindItems(secretsList[position])
+    }
+
+    override fun getItemCount(): Int {
+        return secretsList.size
+    }
+
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        fun bindItems(msg: String) {
+            itemView.findViewById<TextView>(R.id.textViewMsg).text = msg
         }
     }
 }

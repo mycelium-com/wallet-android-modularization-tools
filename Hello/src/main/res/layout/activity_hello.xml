@@ -20,8 +20,6 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_hello" />
-
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
@@ -30,4 +28,11 @@
         android:layout_margin="@dimen/fab_margin"
         app:srcCompat="@android:drawable/ic_dialog_email" />
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvSecrets"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:scrollbars="none"
+        app:layoutManager="android.support.v7.widget.GridLayoutManager" />
 </android.support.design.widget.CoordinatorLayout>
