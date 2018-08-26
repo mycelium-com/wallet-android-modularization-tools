@@ -20,14 +20,15 @@ class HelloActivity : AppCompatActivity() {
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Loading secrets", Snackbar.LENGTH_SHORT)
                     .setAction("Action", null).show()
-            CommunicationManager.getInstance().requestPair("com.mycelium.demo.world")
-            contentResolver.query(Uri.parse("content://com.mycelium.demo.world.providers.Secretsprovider"), null, null, null, null).use {
-                val secretsList = mutableListOf<String>()
-                while (it?.moveToNext() == true) {
-                    secretsList.add(it.getString(0))
+            if (CommunicationManager.getInstance().requestPair("com.mycelium.demo.world")) {
+                contentResolver.query(Uri.parse("content://com.mycelium.demo.world.providers.Secretsprovider"), null, null, null, null).use {
+                    val secretsList = mutableListOf<String>()
+                    while (it?.moveToNext() == true) {
+                        secretsList.add(it.getString(0))
+                    }
+                    rvSecrets.adapter = SecretsRecyclerAdapter(secretsList)
+                    Snackbar.make(view, "Secrets received: ${secretsList.joinToString(" ")}", Snackbar.LENGTH_LONG).show()
                 }
-                rvSecrets.adapter = SecretsRecyclerAdapter(secretsList)
-                Snackbar.make(view, "Secrets received: ${secretsList.joinToString(" ")}", Snackbar.LENGTH_LONG).show()
             }
         }
         rvSecrets.adapter = SecretsRecyclerAdapter(listOf("no data", "press the button"))

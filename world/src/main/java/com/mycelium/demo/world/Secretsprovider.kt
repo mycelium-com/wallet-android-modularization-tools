@@ -17,7 +17,9 @@ class Secretsprovider : ContentProvider() {
     }
 
     override fun query(p0: Uri, p1: Array<String>?, p2: String?, p3: Array<String>?, p4: String?): Cursor? {
-        communicationManager!!.requestPair(callingPackage!!)
+        if(!communicationManager!!.requestPair(callingPackage!!)) {
+            return null
+        }
         return MatrixCursor(arrayOf("msg")).also { mc ->
             WorldApplication.sentMessages.forEach {
                 mc.addRow(listOf(it))
