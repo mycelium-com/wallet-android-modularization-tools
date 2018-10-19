@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.util.Base64
 import android.util.Log
 import com.google.gson.GsonBuilder
@@ -228,11 +229,14 @@ class CommunicationManager private constructor(val context: Context, private val
         serviceIntent.putExtra("key", getKey(receivingPackage))
         serviceIntent.component = ComponentName(receivingPackage, MessageReceiver::class.qualifiedName!!)
         try {
-            context.startService(serviceIntent)
+            if (Build.VERSION.SDK_INT >= 26) {
+                context.startForegroundService(serviceIntent)
+            } else {
+                context.startService(serviceIntent)
+            }
         } catch (e: SecurityException) {
             Log.e(LOG_TAG, "", e) // often throw after update mbw application with exception "process is bad"
         }
-
     }
 
     companion object {
