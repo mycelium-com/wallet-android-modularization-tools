@@ -229,7 +229,10 @@ class CommunicationManager private constructor(val context: Context, private val
         serviceIntent.putExtra("key", getKey(receivingPackage))
         serviceIntent.component = ComponentName(receivingPackage, MessageReceiver::class.qualifiedName!!)
         try {
-            if (Build.VERSION.SDK_INT >= 26) {
+            // TODO: startForegroundService requires the service to to also set itself as foreground service
+            // We know that BCH doesn't do that, so we call it old style.
+            // Ideally we would know that in a generic way or have all possible modules be new style
+            if (Build.VERSION.SDK_INT >= 26 && !receivingPackage.contains("com.mycelium.module.spvbch")) {
                 context.startForegroundService(serviceIntent)
             } else {
                 context.startService(serviceIntent)
