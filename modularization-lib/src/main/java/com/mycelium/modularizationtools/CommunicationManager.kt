@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.util.Base64
 import android.util.Log
 import com.google.gson.GsonBuilder
@@ -16,7 +17,7 @@ import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 import java.util.*
 
-class CommunicationManager private constructor(val context: Context, val modularizationApiVersion: Int) {
+class CommunicationManager private constructor(val context: Context, private val modularizationApiVersion: Int) {
     private val trustedPackages = HashMap<String, PackageMetaData>()
     private val sessionFilename = "sessions.json"
     private val LOG_TAG: String? = this::class.java.canonicalName
@@ -53,7 +54,7 @@ class CommunicationManager private constructor(val context: Context, val modular
         Log.d(LOG_TAG, "Loading trust database of latest package version…")
         for (pmd in trustConfiguration.packages) {
             Log.d(LOG_TAG, "Trusting ${pmd.name} with sig ${pmd.signature}.")
-            trustedPackages.put(pmd.name, pmd)
+            trustedPackages[pmd.name] = pmd
         }
     }
 
@@ -190,6 +191,7 @@ class CommunicationManager private constructor(val context: Context, val modular
     private fun getSigningPubKeyHash(packageName: String): String {
         try {
             // Lint warns here about an exploit and we think this one is handled correctly but we are hesitant to suppress the warning for sake of future awareness.
+            // GET_SIGNATURES is deprecated but the replacement GET_SIGNING_CERTIFICATES requires API 28
             val signatures = context.packageManager.getPackageInfo(packageName, PackageManager.GET_SIGNATURES).signatures
             var signingPubKeyHash: String? = null
             // A package can have more than one signature. Check them all.
@@ -225,13 +227,19 @@ class CommunicationManager private constructor(val context: Context, val modular
 
         val serviceIntent = intent.clone() as Intent
         serviceIntent.putExtra("key", getKey(receivingPackage))
-        serviceIntent.component = ComponentName(receivingPackage, MessageReceiver::class.qualifiedName)
+        serviceIntent.component = ComponentName(receivingPackage, MessageReceiver::class.qualifiedName!!)
         try {
-            context.startService(serviceIntent)
+            // TODO: startForegroundService requires the service to to also set itself as foreground service
+            // We know that BCH doesn't do that, so we call it old style.
+            // Ideally we would know that in a generic way or have all possible modules be new style
+            if (Build.VERSION.SDK_INT >= 26 && !receivingPackage.contains("com.mycelium.module.spvbch")) {
+                context.startForegroundService(serviceIntent)
+            } else {
+                context.startService(serviceIntent)
+            }
         } catch (e: SecurityException) {
             Log.e(LOG_TAG, "", e) // often throw after update mbw application with exception "process is bad"
         }
-
     }
 
     companion object {
@@ -267,5 +275,4 @@ private data class PackageMetaData(
         val signature: String,
         var key: Long? = null)
 
-private data class TrustConfiguration(
-        val packages: Array<PackageMetaData>)
+private data class TrustConfiguration(val packages: Array<PackageMetaData>)

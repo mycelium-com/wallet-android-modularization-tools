@@ -1,11 +1,34 @@
 package com.mycelium.modularizationtools
 
 import android.app.IntentService
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
 import android.content.Intent
+import android.os.Build
+import android.support.v4.app.NotificationCompat
 import android.util.Log
 
 class MessageReceiver : IntentService("MessageReceiverThread") {
     private val LOG_TAG: String? = this.javaClass.canonicalName
+
+    override fun onCreate() {
+        super.onCreate()
+        if (Build.VERSION.SDK_INT >= 26) {
+            val CHANNEL_ID = "some channel name 2"
+            val channel = NotificationChannel(CHANNEL_ID,
+                    "Message Receiver",
+                    NotificationManager.IMPORTANCE_DEFAULT)
+
+            (getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager).createNotificationChannel(channel)
+
+            val notification = NotificationCompat.Builder(this, CHANNEL_ID)
+                    .setContentTitle("ContentTitle")
+                    .setContentText("ContentText").build()
+
+            startForeground(2, notification)
+        }
+    }
 
     /**
      * This method is invoked on the worker thread with a request to process.

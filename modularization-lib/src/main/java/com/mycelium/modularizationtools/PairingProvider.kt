@@ -32,11 +32,11 @@ open class PairingProvider : ContentProvider() {
     override fun query(uri: Uri, projection: Array<String>?, selection: String?, selectionArgs: Array<String>?, sortOrder: String?): Cursor? {
         val sessionKey = selectionArgs!![0].toLong()
         val version = selectionArgs[1].toInt()
-        CommunicationManager.getInstance().pair(callingPackage, sessionKey, version)
+        CommunicationManager.getInstance().pair(callingPackage!!, sessionKey, version)
         val cursor = MatrixCursor(arrayOf("name", "shortName", "description", "version"))
         var versionName = ""
         try {
-            val packageInfo = context.packageManager.getPackageInfo(context.packageName, 0)
+            val packageInfo = context!!.packageManager.getPackageInfo(context!!.packageName, 0)
             versionName = packageInfo.versionName
         } catch (ignore: PackageManager.NameNotFoundException) {
         }
