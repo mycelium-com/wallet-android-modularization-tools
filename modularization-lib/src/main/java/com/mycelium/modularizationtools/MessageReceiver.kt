@@ -15,16 +15,18 @@ class MessageReceiver : IntentService("MessageReceiverThread") {
     override fun onCreate() {
         super.onCreate()
         if (Build.VERSION.SDK_INT >= 26) {
-            val CHANNEL_ID = "some channel name 2"
-            val channel = NotificationChannel(CHANNEL_ID,
-                    "Message Receiver",
+            val service = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            val CHANNEL_ID = "message receiver"
+            val channel = NotificationChannel(CHANNEL_ID, "Message Receiver",
                     NotificationManager.IMPORTANCE_DEFAULT)
 
-            (getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager).createNotificationChannel(channel)
+            service.createNotificationChannel(channel)
 
-            val notification = NotificationCompat.Builder(this, CHANNEL_ID)
-                    .setContentTitle("ContentTitle")
-                    .setContentText("ContentText").build()
+            val notification = NotificationCompat.Builder(applicationContext, CHANNEL_ID)
+                    .setSmallIcon((application as ModuleMessageReceiver).getIcon())
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                    .setCategory(NotificationCompat.CATEGORY_SERVICE)
+                    .build()
 
             startForeground(2, notification)
         }
@@ -82,4 +84,5 @@ class MessageReceiver : IntentService("MessageReceiverThread") {
 
 interface ModuleMessageReceiver {
     fun onMessage(callingPackageName: String, intent: Intent)
+    fun getIcon(): Int
 }
