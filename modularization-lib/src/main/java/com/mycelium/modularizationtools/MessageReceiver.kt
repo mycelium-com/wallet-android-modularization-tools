@@ -26,6 +26,8 @@ class MessageReceiver : IntentService("MessageReceiverThread") {
                     .setSmallIcon((application as ModuleMessageReceiver).getIcon())
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                     .setCategory(NotificationCompat.CATEGORY_SERVICE)
+                    .setContentTitle("Title title")
+                    .setContentText("Text text")
                     .build()
 
             startForeground(2, notification)
