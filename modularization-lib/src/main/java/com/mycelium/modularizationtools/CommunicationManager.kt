@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
-import android.os.Build
 import android.util.Base64
 import android.util.Log
 import com.google.gson.GsonBuilder
@@ -13,6 +12,7 @@ import com.google.gson.JsonSyntaxException
 import com.mycelium.modularizationtools.model.Module
 import java.io.File
 import java.io.InputStreamReader
+import java.lang.IllegalStateException
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 import java.util.*
@@ -229,12 +229,10 @@ class CommunicationManager private constructor(val context: Context, private val
         serviceIntent.putExtra("key", getKey(receivingPackage))
         serviceIntent.component = ComponentName(receivingPackage, MessageReceiver::class.qualifiedName!!)
         try {
-            if (Build.VERSION.SDK_INT >= 26) {
-                context.startForegroundService(serviceIntent)
-            } else {
-                context.startService(serviceIntent)
-            }
+            context.startService(serviceIntent)
         } catch (e: SecurityException) {
+            Log.e(LOG_TAG, "", e) // often throw after update mbw application with exception "process is bad"
+        } catch (e: IllegalStateException) {
             Log.e(LOG_TAG, "", e) // often throw after update mbw application with exception "process is bad"
         }
     }
