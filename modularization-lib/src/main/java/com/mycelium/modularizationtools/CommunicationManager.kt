@@ -11,6 +11,7 @@ import com.google.gson.GsonBuilder
 import com.google.gson.JsonSyntaxException
 import com.mycelium.modularizationtools.model.Module
 import java.io.File
+import java.io.FileNotFoundException
 import java.io.InputStreamReader
 import java.lang.IllegalStateException
 import java.security.MessageDigest
@@ -48,13 +49,19 @@ class CommunicationManager private constructor(val context: Context, private val
     }
 
     private fun loadTrustedPackages() {
-        val readerDev = InputStreamReader(context.resources.assets.open("trusted_packages.json"))
-        val gson = GsonBuilder().create()
-        val trustConfiguration = gson.fromJson(readerDev, TrustConfiguration::class.java)
-        Log.d(LOG_TAG, "Loading trust database of latest package version…")
-        for (pmd in trustConfiguration.packages) {
-            Log.d(LOG_TAG, "Trusting ${pmd.name} with sig ${pmd.signature}.")
-            trustedPackages[pmd.name] = pmd
+        try {
+            val readerDev = InputStreamReader(context.resources.assets.open("trusted_packages.json"))
+            val gson = GsonBuilder().create()
+            val trustConfiguration = gson.fromJson(readerDev, TrustConfiguration::class.java)
+            Log.d(LOG_TAG, "Loading trust database of latest package version…")
+            for (pmd in trustConfiguration.packages) {
+                Log.d(LOG_TAG, "Trusting ${pmd.name} with sig ${pmd.signature}.")
+                trustedPackages[pmd.name] = pmd
+            }
+        } catch (ignore: FileNotFoundException) {
+            // if loading of trusted packages fails, modules don't work but the wallet will not crash.
+            // One user had a FileNotFoundException for mysterious reasons:
+            // clusterName=apps/com.mycelium.wallet/clusters/88be1ad3
         }
     }
 
