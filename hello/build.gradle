@@ -6,7 +6,7 @@ android {
     compileSdkVersion rootProject.androidCompileSdkVersion
 
     defaultConfig {
-        applicationId "com.mycelium.demo.world"
+        applicationId "com.mycelium.demo.hello"
         minSdkVersion rootProject.androidMinSdkVersion
         targetSdkVersion rootProject.androidTargetSdkVersion
         versionCode 1
@@ -42,7 +42,6 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$rootProject.appCompatVersion"
     implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraintLayoutVersion"
     implementation "com.google.android.material:material:$rootProject.materialVersion"
-
     testImplementation "junit:junit:$rootProject.junitVersion"
     androidTestImplementation "androidx.test.ext:junit:1.1.1"
     androidTestImplementation "androidx.test.espresso:espresso-core:3.2.0"
