@@ -7,6 +7,8 @@ import com.mycelium.modularizationtools.CommunicationManager
 import com.mycelium.modularizationtools.ModuleMessageReceiver
 
 class HelloApplication : Application(), ModuleMessageReceiver {
+    override fun getIcon(): Int = R.mipmap.ic_launcher
+
     override fun onCreate() {
         super.onCreate()
         CommunicationManager.init(this)
