@@ -16,7 +16,7 @@ import android.net.Uri
  */
 open class PairingProvider : ContentProvider() {
     override fun onCreate(): Boolean {
-        CommunicationManager.init(context)
+        CommunicationManager.init(context!!)
         return true
     }
 
@@ -40,8 +40,8 @@ open class PairingProvider : ContentProvider() {
             versionName = packageInfo.versionName
         } catch (ignore: PackageManager.NameNotFoundException) {
         }
-        cursor.addRow(arrayOf(context.getString(R.string.module_name), context.getString(R.string.module_short_name)
-                , context.getString(R.string.module_description), versionName))
+        cursor.addRow(arrayOf(context!!.getString(R.string.module_name), context!!.getString(R.string.module_short_name)
+                , context!!.getString(R.string.module_description), versionName))
         return cursor
     }
 

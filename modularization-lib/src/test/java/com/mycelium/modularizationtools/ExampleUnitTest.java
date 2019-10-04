@@ -1,4 +1,4 @@
-package com.mycelium.wallet_android_modularization_tools;
+package com.mycelium.modularizationtools;
 
 import org.junit.Test;
 
@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
  */
 public class ExampleUnitTest {
     @Test
-    public void addition_isCorrect() {
+    public void testAddition() {
         assertEquals(4, 2 + 2);
     }
 }

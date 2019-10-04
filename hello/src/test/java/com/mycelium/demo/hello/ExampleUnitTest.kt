@@ -1,4 +1,4 @@
-package com.mycelium.world
+package com.mycelium.demo.hello
 
 import org.junit.Test
 
@@ -11,7 +11,7 @@ import org.junit.Assert.*
  */
 class ExampleUnitTest {
     @Test
-    fun addition_isCorrect() {
+    fun testAddition() {
         assertEquals(4, 2 + 2)
     }
 }
