@@ -6,8 +6,8 @@ import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import android.util.Log
 import androidx.core.app.NotificationCompat
+import android.util.Log
 
 class MessageReceiver : IntentService("MessageReceiverThread") {
     private val LOG_TAG: String? = this.javaClass.canonicalName

@@ -2,8 +2,8 @@ package com.mycelium.demo.world
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v7.app.AppCompatActivity
+import com.google.android.material.snackbar.Snackbar
+import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import com.mycelium.modularizationtools.CommunicationManager
@@ -11,7 +11,6 @@ import com.mycelium.modularizationtools.CommunicationManager
 import kotlinx.android.synthetic.main.activity_world.*
 
 class WorldActivity : AppCompatActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_world)

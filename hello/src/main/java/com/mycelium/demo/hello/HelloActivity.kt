@@ -2,9 +2,9 @@ package com.mycelium.demo.hello
 
 import android.net.Uri
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.RecyclerView
 import android.view.*
 import android.widget.TextView
 import com.mycelium.modularizationtools.CommunicationManager
@@ -51,7 +51,7 @@ class HelloActivity : AppCompatActivity() {
     }
 }
 
-class SecretsRecyclerAdapter(val secretsList: List<String>) : RecyclerView.Adapter<SecretsRecyclerAdapter.ViewHolder>() {
+class SecretsRecyclerAdapter(val secretsList: List<String>) : androidx.recyclerview.widget.RecyclerView.Adapter<SecretsRecyclerAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val v = LayoutInflater.from(parent.context).inflate(R.layout.list_layout, parent, false)
         return ViewHolder(v)
@@ -65,7 +65,7 @@ class SecretsRecyclerAdapter(val secretsList: List<String>) : RecyclerView.Adapt
         return secretsList.size
     }
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
         fun bindItems(msg: String) {
             itemView.findViewById<TextView>(R.id.textViewMsg).text = msg
         }
