@@ -15,7 +15,7 @@ class HelloApplication : Application(), ModuleMessageReceiver {
         try {
             CommunicationManager.getInstance().requestPair("com.mycelium.demo.world")
         } catch (se: SecurityException) {
-            Log.w("HelloApplication", se.message)
+            Log.w("HelloApplication", se.message!!)
         }
     }
 
@@ -24,7 +24,7 @@ class HelloApplication : Application(), ModuleMessageReceiver {
             "com.mycelium.demo.world" -> {
                 val msg = intent.getStringExtra("message")
                 Log.d("HelloApplication", "Message received: $msg")
-                if (msg.contains("5")) {
+                if (msg!!.contains("5")) {
                     startActivity(Intent(applicationContext, HelloActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
                 }
             }

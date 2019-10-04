@@ -11,7 +11,7 @@ class WorldApplication : Application() {
         try {
             CommunicationManager.getInstance().requestPair("com.mycelium.demo.hello")
         } catch (se: SecurityException) {
-            Log.w("WorldApplication", se.message)
+            Log.w("WorldApplication", se.message!!)
         }
     }
 
