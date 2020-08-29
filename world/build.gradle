@@ -24,6 +24,15 @@ android {
         }
     }
 
+    splits {
+        abi {
+            enable true
+            reset()
+            include ABI_FILTERS
+            universalApk false
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
