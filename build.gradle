@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        gradleVersion = '3.5.3'
+        gradleVersion = '4.1.1'
         androidCompileSdkVersion = 29
         androidSdkBuildVersion = '29.0.3'
         androidMinSdkVersion = 19
@@ -13,8 +13,8 @@ buildscript {
         gsonVersion = '2.8.5'
     }
     repositories {
+        mavenCentral()
         google()
-        jcenter()
     }
     dependencies {
         classpath "com.android.tools.build:gradle:$rootProject.gradleVersion"
@@ -24,8 +24,8 @@ buildscript {
 
 allprojects {
     repositories {
+        mavenCentral()
         google()
-        jcenter()
     }
 }
 
