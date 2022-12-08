@@ -16,15 +16,6 @@ android {
         buildConfigField "int", "ModuleApiVersion", "10"
     }
 
-    splits {
-        abi {
-            enable true
-            reset()
-            include ABI_FILTERS
-            universalApk false
-        }
-    }
-
     buildTypes {
         release {
             minifyEnabled false
