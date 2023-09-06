@@ -8,7 +8,6 @@ import android.view.Menu
 import android.view.MenuItem
 import com.mycelium.modularizationtools.CommunicationManager
 
-import kotlinx.android.synthetic.main.activity_world.*
 
 class WorldActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

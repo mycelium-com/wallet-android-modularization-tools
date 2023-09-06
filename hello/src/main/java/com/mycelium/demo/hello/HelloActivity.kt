@@ -9,7 +9,6 @@ import android.view.*
 import android.widget.TextView
 import com.mycelium.modularizationtools.CommunicationManager
 
-import kotlinx.android.synthetic.main.activity_hello.*
 
 class HelloActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
