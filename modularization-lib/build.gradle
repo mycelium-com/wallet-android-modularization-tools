@@ -2,8 +2,8 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion rootProject.androidCompileSdkVersion
-    buildToolsVersion rootProject.androidSdkBuildVersion
+    compileSdk rootProject.androidCompileSdkVersion
+    buildToolsVersion = rootProject.androidSdkBuildVersion
 
     defaultConfig {
         minSdkVersion rootProject.androidMinSdkVersion
