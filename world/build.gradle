@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion rootProject.androidCompileSdkVersion
+    compileSdk rootProject.androidCompileSdkVersion
 
     defaultConfig {
         applicationId "com.mycelium.demo.world"
