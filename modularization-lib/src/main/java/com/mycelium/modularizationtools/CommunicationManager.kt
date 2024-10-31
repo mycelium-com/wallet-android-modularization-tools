@@ -202,7 +202,7 @@ class CommunicationManager private constructor(val context: Context, private val
             val signatures = context.packageManager.getPackageInfo(packageName, PackageManager.GET_SIGNATURES).signatures
             var signingPubKeyHash: String? = null
             // A package can have more than one signature. Check them all.
-            for (signature in signatures) {
+            signatures?.forEach { signature ->
                 val md = MessageDigest.getInstance("SHA-256")
                 val digest = md.digest(signature.toByteArray())
                 val base64Digest = Base64.encodeToString(digest, Base64.DEFAULT or Base64.NO_WRAP)

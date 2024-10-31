@@ -37,7 +37,7 @@ open class PairingProvider : ContentProvider() {
         var versionName = ""
         try {
             val packageInfo = context!!.packageManager.getPackageInfo(context!!.packageName, 0)
-            versionName = packageInfo.versionName
+            versionName = packageInfo.versionName ?: ""
         } catch (ignore: PackageManager.NameNotFoundException) {
         }
         cursor.addRow(arrayOf(context!!.getString(R.string.module_name), context!!.getString(R.string.module_short_name)
