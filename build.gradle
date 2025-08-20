@@ -2,7 +2,6 @@ buildscript {
     ext {
         gradleVersion = '3.5.3'
         androidCompileSdkVersion = 34
-        androidSdkBuildVersion = '29.0.3'
         androidMinSdkVersion = 21
         androidTargetSdkVersion = 34
         junitVersion = '4.12'
