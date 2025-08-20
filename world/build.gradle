@@ -2,12 +2,12 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdk rootProject.androidCompileSdkVersion
+    compileSdk = libs.versions.android.compileSdk.get().toInteger()
 
     defaultConfig {
         applicationId "com.mycelium.demo.world"
-        minSdkVersion rootProject.androidMinSdkVersion
-        targetSdkVersion rootProject.androidTargetSdkVersion
+        minSdk = libs.versions.android.minSdk.get().toInteger()
+        targetSdk = libs.versions.android.targetSdk.get().toInteger()
         versionCode 1
         versionName "1.0"
 
